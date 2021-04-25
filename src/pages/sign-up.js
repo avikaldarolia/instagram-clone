@@ -3,7 +3,7 @@ import FirebaseContext from "../context/firebase";
 import { useContext, useEffect, useState } from "react";
 import { isInaccessible } from "@testing-library/dom";
 import * as ROUTES from "../constants/routes";
-
+import { doesUsernameExist } from "../services/firebase";
 export default function SignUp() {
   const history = useHistory();
   const { firebase } = useContext(FirebaseContext);
@@ -17,8 +17,34 @@ export default function SignUp() {
 
   const handleSingUp = async (event) => {
     event.preventDefault();
-    // try {
-    // } catch (error) {}
+    const usernameExists = await doesUsernameExist(username);
+    console.log(usernameExists);
+    if (!username) {
+      try {
+        const createdUserResult = await firebase
+          .auth()
+          .createUserWithEmailAndPassword(emailAddress, password);
+
+        await createdUserResult.user.updateProfile({
+          displayName: username,
+        });
+
+        await firebase.firestore().collection("users").add({
+          userId: createdUserResult.user.uid,
+          username: username.toLowerCase(),
+          fullName,
+          emailAddress: emailAddress.toLowerCase(),
+          following: [],
+          dateCreated: Date.now(),
+        });
+        history.push(ROUTES.DASHBOARD);
+      } catch (error) {
+        setFullName("");
+        setEmailAddress("");
+        setPassword("");
+        setError(error.message);
+      }
+    }
   };
   useEffect(() => {
     document.title = "Sign Up - Instagram";
@@ -52,22 +78,25 @@ export default function SignUp() {
               className='text-sm text-gray-base w-full mr-3 py-5 px-4 h-2 border
             border-gray-primary rounded mb-2'
               onChange={({ target }) => setUsername(target.value)}
+              value={username}
             />
-             <input
+            <input
               aria-label='Enter your full name'
               type='text'
               placeholder='Full Name'
               className='text-sm text-gray-base w-full mr-3 py-5 px-4 h-2 border
             border-gray-primary rounded mb-2'
               onChange={({ target }) => setFullName(target.value)}
+              value={fullName}
             />
-             <input
-              aria-label='Enter your username'
+            <input
+              aria-label='Enter your email address'
               type='text'
-              placeholder='Username'
+              placeholder='Email Address'
               className='text-sm text-gray-base w-full mr-3 py-5 px-4 h-2 border
             border-gray-primary rounded mb-2'
               onChange={({ target }) => setEmailAddress(target.value)}
+              value={emailAddress}
             />
             <input
               aria-label='Enter your password'
@@ -76,6 +105,7 @@ export default function SignUp() {
               className='text-sm text-gray-base w-full mr-3 py-5 px-4 h-2 border
             border-gray-primary rounded mb-2'
               onChange={({ target }) => setPassword(target.value)}
+              value={password}
             />
             <button
               disabled={isInvalid}
@@ -89,9 +119,9 @@ export default function SignUp() {
         </div>
         <div className='flex justify-center items-center flex-col rounded  w-full bg-white p-4 border border-gray-primary'>
           <p className='text-sm'>
-            Don't have an account?{` `}
-            <Link to='/signup' className='font-bold text-blue-medium'>
-              Sign Up
+            Have an account?{` `}
+            <Link to={ROUTES.LOGIN} className='font-bold text-blue-medium'>
+              Log In
             </Link>
           </p>
         </div>
