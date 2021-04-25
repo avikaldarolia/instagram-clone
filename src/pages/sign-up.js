@@ -4,11 +4,12 @@ import { useContext, useEffect, useState } from "react";
 import { isInaccessible } from "@testing-library/dom";
 import * as ROUTES from "../constants/routes";
 
-export default function Login() {
+export default function SignUp() {
   const history = useHistory();
   const { firebase } = useContext(FirebaseContext);
-  
 
+  const [username, setUsername] = useState("");
+  const [fullName, setFullName] = useState("");
   const [emailAddress, setEmailAddress] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -16,11 +17,8 @@ export default function Login() {
 
   const handleSingUp = async (event) => {
     event.preventDefault();
-    try {
-     
-    } catch (error) {
-      
-    }
+    // try {
+    // } catch (error) {}
   };
   useEffect(() => {
     document.title = "Sign Up - Instagram";
@@ -48,9 +46,25 @@ export default function Login() {
 
           <form onSubmit={handleSingUp} method='POST'>
             <input
-              aria-label='Enter your email address'
+              aria-label='Enter your username'
               type='text'
-              placeholder='Email Address'
+              placeholder='Username'
+              className='text-sm text-gray-base w-full mr-3 py-5 px-4 h-2 border
+            border-gray-primary rounded mb-2'
+              onChange={({ target }) => setUsername(target.value)}
+            />
+             <input
+              aria-label='Enter your full name'
+              type='text'
+              placeholder='Full Name'
+              className='text-sm text-gray-base w-full mr-3 py-5 px-4 h-2 border
+            border-gray-primary rounded mb-2'
+              onChange={({ target }) => setFullName(target.value)}
+            />
+             <input
+              aria-label='Enter your username'
+              type='text'
+              placeholder='Username'
               className='text-sm text-gray-base w-full mr-3 py-5 px-4 h-2 border
             border-gray-primary rounded mb-2'
               onChange={({ target }) => setEmailAddress(target.value)}
@@ -65,11 +79,11 @@ export default function Login() {
             />
             <button
               disabled={isInvalid}
-              type="submit"
+              type='submit'
               className={`bg-blue-medium text-white w-full rounded h-8 font-bold
-            ${isInvalid && 'opacity-50'}`}
+            ${isInvalid && "opacity-50"}`}
             >
-              Login
+              Sign Up
             </button>
           </form>
         </div>
