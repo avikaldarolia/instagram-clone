@@ -10,7 +10,7 @@ export async function doesUsernameExist(username) {
   return result.docs.map((user) => (user.data().length > 0 ? "true" : "false"));
 }
 
-export async function getUserObjByUserId(userId) {
+export async function getUserByUserId(userId) {
   const result = await firebase
     .firestore()
     .collection("users")
