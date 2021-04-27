@@ -7,6 +7,7 @@ import * as ROUTES from "../constants/routes";
 export default function Header() {
   const { firebase } = useContext(FirebaseContext);
   const { user } = useContext(UserContext);
+  // console.log("user", user);
 
   return (
     <header className='h-16 bg-white border-b border-gray-primary mb-8'>
@@ -71,15 +72,32 @@ export default function Header() {
                 <div className='flex items-center cursor-pointer'>
                   <Link to={`/p/${user.displayName}`}>
                     <img
-                      src={`/images/avatars/${user.displayName}.jpg`}
-                      alt={`${user.displayName} profile picture`}
                       className='rounded-full h-8 w-8 flex'
+                      src={`/images/avatars/${user.displayName}.jpeg`}
+                      alt={`${user.displayName} profile`}
                     />
                   </Link>
                 </div>
               </>
             ) : (
-              <></>
+              <>
+                <Link to={ROUTES.LOGIN}>
+                  <button
+                    type='button'
+                    className='bg-blue-medium font-bold text-sm rounded text-white w-20 h-8'
+                  >
+                    Log In
+                  </button>
+                </Link>
+                <Link to={ROUTES.SIGN_UP}>
+                  <button
+                    type='button'
+                    className='font-bold text-sm rounded text-blue-medium w-20 h-8'
+                  >
+                    Sign Up
+                  </button>
+                </Link>
+              </>
             )}
           </div>
         </div>
