@@ -6,10 +6,10 @@ export default function useUser() {
   const { user } = useContext(UserContext);
   useEffect(() => {
     async function getUserObjByUserId() {
-       const [response] = await getUserByUserId(user.uid);
+      const [response] = await getUserByUserId(user.uid);
       setActiveUser(response);
     }
-    // what is this for??????
+
     if (user?.uid) {
       getUserObjByUserId();
     }
