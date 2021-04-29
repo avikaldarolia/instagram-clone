@@ -1,13 +1,10 @@
-import { useEffect, useState, useContext } from "react";
-import UserContext from "../../context/user";
+import { useEffect, useState } from "react";
 import PropTypes from "prop-types";
-import FirebaseContext from "../../context/firebase";
 import Skeleton from "react-loading-skeleton";
 import { getSuggestedProfiles } from "../../services/firebase";
-export default function Suggestions({ userId, following }) {
-  // const { firebase } = useContext(FirebaseContext);
-  // const { user } = useContext(UserContext);
+import SuggestedProfile from "./suggested-profile";
 
+export default function Suggestions({ userId, following }) {
   const [profiles, setProfiles] = useState([]);
 
   useEffect(() => {
@@ -19,11 +16,7 @@ export default function Suggestions({ userId, following }) {
     if (userId) {
       suggestedProfiles();
     }
-
-    console.log("userID", userId);
   }, [userId]);
-
-  console.log("profiles", profiles);
 
   return !profiles ? (
     <Skeleton count={10} height={150} className='mt-5' />
@@ -33,18 +26,15 @@ export default function Suggestions({ userId, following }) {
         <p className='font-bold text-gray-base'>Suggestions for you</p>
       </div>
       <div className='mt-4 grid gap-5'>
-        {profiles.map((profile) => {
-          {
-            /* <SuggestedProfile
+        {profiles.map((profile) => (
+          <SuggestedProfile
             key={profile.docId}
-            userDocId={profile.username}
+            userDocId={profile.docId}
+            username={profile.username}
             profileId={profile.userId}
             userId={userId}
-          />;  */
-          }
-
-          return <p key={profile.userId}>{profile.fullName}</p>;
-        })}
+          />
+        ))}
       </div>
     </div>
   ) : null;

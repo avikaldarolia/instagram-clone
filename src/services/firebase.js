@@ -39,6 +39,5 @@ export async function getSuggestedProfiles(userId, following) {
         profile.userId !== userId && !following.includes(profile.userId)
     );
 
-  console.log("UpdatedResult", updateResult);
   return updateResult;
 }
