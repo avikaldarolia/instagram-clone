@@ -4,7 +4,8 @@ import Post from "./post";
 export default function Timeline() {
   // we need to get the login photos
   const { photos } = usePhotos();
-  console.log("Photos", photos);
+
+  // console.log("photos", photos);
   return (
     <div className='container col-span-2'>
       {!photos ? (
