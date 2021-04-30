@@ -1,12 +1,19 @@
 import Skeleton from "react-loading-skeleton";
 import usePhotos from "../hooks/use-photos";
-
+import Post from './post'
 export default function Timeline() {
   // we need to get the login photos
   const { photos } = usePhotos();
+  console.log("Photos", photos);
   return (
     <div className='container col-span-2'>
-      <p>I am the timeline</p>
+      {!photos ? (
+        <Skeleton count={4} width={600} height={400} className='mb-5' />
+      ) : photos?.length > 0 ? (
+        photos.map((content) => <Post key={content.docId}>{content.imageSrc}</Post>)
+      ) : (
+        <p className='text-center text-2xl'>Follow people to see photos!</p>
+      )}
     </div>
   );
 }
