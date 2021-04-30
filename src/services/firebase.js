@@ -96,8 +96,10 @@ export async function getPhotos(userId, following) {
       if (photo.likes.includes(userId)) {
         userLikedPhoto = true;
       }
+      // we are fetching the user who posted the image. and we destructure the username out of it.
       const user = await getUserByUserId(photo.userId);
       // it comes back an array
+      // Here username is the username of the owner of the photo and NOT THE USER LOGGED IN
       const { username } = user[0];
       return { username, ...photo, userLikedPhoto };
     })

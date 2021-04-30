@@ -1,8 +1,7 @@
 import PropTypes from "prop-types";
 
 export default function Image({ src, caption }) {
-  console.log("Image Source ", src);
-  return <img src={src} alt={caption} />;
+  return <img src={src} alt={caption} className="h-100px" />;
 }
 
 Image.propTypes = {
