@@ -3,15 +3,17 @@ import PropTypes from "prop-types";
 import Header from "./header";
 import Image from "./image";
 import Actions from "./actions";
+import Footer from "./footer";
+import Comments from "./comments";
+
 export default function Post({ content }) {
   const commentInput = useRef(null);
-    console.log("userLikedPhoto",content.userLikedPhoto)
+  console.log("userLikedPhoto", content.userLikedPhoto);
   const handleFocus = () => commentInput.current.focus();
   // components
   // => header, image, actions (like and comment icons), footer, comments
   //   console.log("content", content);
   return (
-
     <div className='rounded col-span-4 border bg-white border-gray-primary mb-12'>
       <Header username={content.username} />
       <Image src={content.imageSrc} caption={content.caption} />
@@ -20,6 +22,12 @@ export default function Post({ content }) {
         totalLikes={content.likes.length}
         userLikedPhoto={content.userLikedPhoto}
         handleFocus={handleFocus}
+      />
+      <Footer username={content.username} caption={content.caption} />
+      <Comments
+        docId={content.docId}
+        comments={content.comments}
+        commentInput={commentInput}
       />
     </div>
   );
