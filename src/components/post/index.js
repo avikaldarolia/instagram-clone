@@ -8,7 +8,7 @@ import Comments from "./comments";
 
 export default function Post({ content }) {
   const commentInput = useRef(null);
-  console.log("userLikedPhoto", content.userLikedPhoto);
+  // console.log("userLikedPhoto", content.userLikedPhoto);
   const handleFocus = () => commentInput.current.focus();
   // components
   // => header, image, actions (like and comment icons), footer, comments
@@ -28,6 +28,7 @@ export default function Post({ content }) {
         docId={content.docId}
         comments={content.comments}
         commentInput={commentInput}
+        posted={content.dateCreated}
       />
     </div>
   );
