@@ -2,6 +2,7 @@ import PropTypes from "prop-types";
 import { useState } from "react";
 import { formatDistance } from "date-fns";
 import { Link } from "react-router-dom";
+import AddComment from "./add-comment";
 
 export default function Comments({
   docId,
@@ -24,10 +25,22 @@ export default function Comments({
             <Link to={`/p/${item.displayName}`}>
               <span className='mr-1 font-bold'>{item.displayName}</span>
             </Link>
-            {item.comment}
+            <span>{item.comment}</span>
           </p>
         ))}
+        <p className='text-gray-base uppercase text-xs mt-2'>{posted}</p>
+
+        {/* <p className='text-gray-base uppercase text-xs mt-2'>
+          {formatDistance(posted, new Date())} ago
+        </p> */}
       </div>
+
+      <AddComment
+        docId={docId}
+        comments={comments}
+        setComments={setComments}
+        commentInput={commentInput}
+      />
     </>
   );
 }
