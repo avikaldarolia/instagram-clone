@@ -13,8 +13,7 @@ export default function IsUserLoggedIn({
       render={({ location }) => {
         if (!user) {
           return children;
-        }
-        if (!user) {
+        } else {
           return (
             <Redirect
               to={{
@@ -24,7 +23,6 @@ export default function IsUserLoggedIn({
             />
           );
         }
-        return null;
       }}
     />
   );

@@ -35,7 +35,7 @@ function App() {
               <SignUp />
             </IsUserLoggedIn>
             <Route path={ROUTES.PROFILE} component={Profile} />
-            <ProtectedRoute user={user} path={ROUTES.DASHBOARD} exact>
+            <ProtectedRoute user={user} path={ROUTES.DASHBOARD} exact >
               <Dashboard />
             </ProtectedRoute>
             <Route component={NotFound} />

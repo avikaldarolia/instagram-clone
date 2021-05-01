@@ -29,8 +29,6 @@ export default function AddComment({
       .update({
         comments: FieldValue.arrayUnion({ displayName, comment }),
       });
-
-    return null;
   };
 
   return (
