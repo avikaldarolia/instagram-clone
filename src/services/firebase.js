@@ -106,3 +106,31 @@ export async function getPhotos(userId, following) {
 
   return photosWithUserDetails;
 }
+
+export async function getUserByUsername(username) {
+  const result = await firebase
+    .firestore()
+    .collection("users")
+    .where("username", "==", username)
+    .get();
+
+  return result.docs.map((item) => ({
+    ...item.data(),
+    docId: item.id,
+  }));
+}
+
+export async function getUserPhotosByUsername(username) {
+  const [user] = await getUserByUsername(username);
+
+  const result = await firebase
+    .firestore()
+    .collection("photos")
+    .where("username", "==", user.userId)
+    .get();
+
+  return result.docs.map((item) => ({
+    ...item.data(),
+    docId: item.id,
+  }));
+}
