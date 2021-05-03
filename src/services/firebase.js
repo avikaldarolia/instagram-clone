@@ -44,9 +44,9 @@ export async function getSuggestedProfiles(userId, following) {
 // updateLoggedInUserFollowing, updateFollowedUserFollowers,
 
 export async function updateLoggedInUserFollowing(
-  loggedInUserDocId, // currently logged in user ID
-  profileId, //the user that logged in user requests to follow
-  isFollowingProfile //
+  loggedInUserDocId, // currently logged in user document id (karl's profile)
+  profileId, // the user that karl requests to follow
+  isFollowingProfile // true/false (am i currently following this person?)
 ) {
   return firebase
     .firestore()
@@ -120,20 +120,20 @@ export async function getUserByUsername(username) {
   }));
 }
 
-export async function getUserPhotosByUsername(username) {
-  const [user] = await getUserByUsername(username);
-
+export async function getUserPhotosByUserId(userId) {
   const result = await firebase
     .firestore()
     .collection("photos")
-    .where("username", "==", user.userId)
+    .where("userId", "==", userId)
     .get();
 
-  return result.docs.map((item) => ({
-    ...item.data(),
-    docId: item.id,
+  const photos = result.docs.map((photo) => ({
+    ...photo.data(),
+    docId: photo.id,
   }));
+  return photos;
 }
+
 
 export async function isUserFollowingProfile(
   loggedInUserUsername,
@@ -141,15 +141,35 @@ export async function isUserFollowingProfile(
 ) {
   const result = await firebase
     .firestore()
-    .collection("photos")
-    .where("username", "==", loggedInUserUsername)
+    .collection("users")
+    .where("username", "==", loggedInUserUsername) // karl (active logged in user)
     .where("following", "array-contains", profileUserId)
     .get();
-  
+
   const [response = {}] = result.docs.map((item) => ({
     ...item.data(),
     docId: item.id,
   }));
 
-  return response;
+  return response.userId;
+}
+
+export async function toggleFollow(
+  isFollowingProfile,
+  activeUserDocId,
+  profileDocId,
+  profileUserId,
+  followingUserId
+) {
+  await updateLoggedInUserFollowing(
+    activeUserDocId,
+    profileUserId,
+    isFollowingProfile
+  );
+  await updateFollowedUserFollowers(
+    profileDocId,
+    followingUserId,
+    isFollowingProfile
+  );
+  return null;
 }
