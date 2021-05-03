@@ -8,11 +8,11 @@ export default function Profile({ user }) {
   const reducer = (state, newState) => ({ ...state, ...newState });
   const initialState = {
     profile: {},
-    photosCollection: [],
+    photosCollection: null,
     followerCount: 0,
   };
-
-  const [{ profile, photosCollection, folowCount }, dispatch] = useReducer(
+  // console.log("user", user);
+  const [{ profile, photosCollection, followerCount }, dispatch] = useReducer(
     reducer,
     initialState
   );
@@ -26,27 +26,30 @@ export default function Profile({ user }) {
         followerCount: user.followers.length,
       });
     }
-    if (user.username) {
-      getProfileInfoAndPhotos();
-    }
+    getProfileInfoAndPhotos();
   }, [user.username]);
+
   return (
     <>
-      <Header />
+      <Header
+        photosCount={photosCollection ? photosCollection.length : 0}
+        profile={profile}
+        followerCount={followerCount}
+        setFollowerCount={dispatch}
+      />
       <Photos photos={photosCollection} />
-      <p>Hello! {user.username}</p>
     </>
   );
 }
 
 Profile.propTypes = {
   user: PropTypes.shape({
-    dateCreated: PropTypes.number.isRequired,
-    emailAddress: PropTypes.string.isRequired,
-    followers: PropTypes.array.isRequired,
-    following: PropTypes.array.isRequired,
-    fullName: PropTypes.string.isRequired,
-    userId: PropTypes.string.isRequired,
-    username: PropTypes.string.isRequired,
+    dateCreated: PropTypes.number,
+    emailAddress: PropTypes.string,
+    followers: PropTypes.array,
+    following: PropTypes.array,
+    fullName: PropTypes.string,
+    userId: PropTypes.string,
+    username: PropTypes.string,
   }).isRequired,
 };

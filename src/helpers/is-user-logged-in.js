@@ -7,6 +7,8 @@ export default function IsUserLoggedIn({
   children,
   ...rest
 }) {
+  console.log("inside isSUerLoggedIn", user)
+
   return (
     <Route
       {...rest}

@@ -14,7 +14,10 @@ export default function Post({ content }) {
   // => header, image, actions (like and comment icons), footer, comments
   //   console.log("content", content);
   return (
-    <div className='rounded col-span-4 border bg-white border-gray-primary mb-12'>
+    <div
+      className='rounded col-span-4 border bg-white border-gray-primary mb-6'
+      style={{ width: "550px" }}
+    >
       <Header username={content.username} />
       <Image src={content.imageSrc} caption={content.caption} />
       <Actions
