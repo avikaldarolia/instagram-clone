@@ -2,6 +2,7 @@ import { useContext } from "react";
 import FirebaseContext from "../context/firebase";
 import UserContext from "../context/user";
 import { Link, useHistory } from "react-router-dom";
+import { DEFAULT_IMAGE_PATH } from '../constants/paths';
 import * as ROUTES from "../constants/routes";
 import useUser from "../hooks/use-user";
 export default function Header() {
@@ -79,6 +80,9 @@ export default function Header() {
                       className='rounded-full h-8 w-8 flex'
                       src={`/images/avatars/${user.username}.jpeg`}
                       alt={`${user?.username} profile`}
+                      onError={(e) => {
+                        e.target.src = DEFAULT_IMAGE_PATH;
+                      }}
                     />
                   </Link>
                 </div>

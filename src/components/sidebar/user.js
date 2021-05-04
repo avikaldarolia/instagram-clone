@@ -1,6 +1,7 @@
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import Skeleton from "react-loading-skeleton";
+import { DEFAULT_IMAGE_PATH } from '../../constants/paths';
 const User = ({ username, fullName }) =>
   !username || !fullName ? (
     <Skeleton count={1} height={61} />
@@ -14,6 +15,9 @@ const User = ({ username, fullName }) =>
           src={`images/avatars/${username}.jpeg`}
           alt=''
           className='rounded-full w-16 flex mr-3'
+          onError={(e) => {
+            e.target.src = DEFAULT_IMAGE_PATH;
+          }}
         />
       </div>
       <div className='col-span-3'>
