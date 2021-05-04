@@ -14,14 +14,14 @@ export default function Comments({
 
   return (
     <>
-      <div className='p-4 pt-1 pb-4'>
+      <div className='p-4 pt-1 pb-1'>
         {comments.length >= 3 && (
-          <p className='text-sx text-gray-base mb-1 cursor-pointer'>
+          <p className=' text-gray-base mb-1 cursor-pointer'>
             View all comments
           </p>
         )}
         {comments.slice(0, 3).map((item) => (
-          <p key={`${item.comment} - ${item.displayName}`} className='mb-1'>
+          <p key={`${item.comment} - ${item.displayName}`} className='mb-1 '>
             <Link to={`/p/${item.displayName}`}>
               <span className='mr-1 font-bold'>{item.displayName}</span>
             </Link>

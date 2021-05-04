@@ -6,14 +6,13 @@ import UserContext from "../../context/user";
 export default function Actions({
   docId,
   totalLikes,
-  userLikedPhoto,
+  likedPhoto,
   handleFocus,
 }) {
   const {
-    user: { uid: userId = "" },
+    user: { uid: userId },
   } = useContext(UserContext);
-
-  const [toggleLiked, setToggleLiked] = useState(userLikedPhoto);
+  const [toggleLiked, setToggleLiked] = useState(likedPhoto);
   const [likes, setLikes] = useState(totalLikes);
   const { firebase, FieldValue } = useContext(FirebaseContext);
 
@@ -33,11 +32,9 @@ export default function Actions({
     setLikes((likes) => (toggleLiked ? likes - 1 : likes + 1));
   };
 
-  //   console.log("toggleLike", toggleLiked);
-
   return (
     <>
-      <div className='flex justy-between p-4'>
+      <div className='flex justify-between ml-4 pb-2 pt-2'>
         <div className='flex'>
           <svg
             onClick={handleToggleLiked}
@@ -97,6 +94,6 @@ export default function Actions({
 Actions.propTypes = {
   docId: PropTypes.string.isRequired,
   totalLikes: PropTypes.number.isRequired,
-  userLikedPhoto: PropTypes.bool.isRequired,
+  likedPhoto: PropTypes.bool.isRequired,
   handleFocus: PropTypes.func.isRequired,
 };

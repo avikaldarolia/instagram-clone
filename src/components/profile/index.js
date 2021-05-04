@@ -25,9 +25,9 @@ export default function Profile({ user }) {
         photosCollection: photos,
         followerCount: user.followers.length,
       });
-    }
+  }
     getProfileInfoAndPhotos();
-  }, [user.username]);
+  }, [user]);
   
   return (
     <>
